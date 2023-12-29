@@ -34,6 +34,19 @@ public class BoardDAO {
 	//글 조회수 늘리는 쿼리 
 	private final String ADD_CNT ="update m_board set cnt = cnt + 1 where id = ?";
 	
+	// 검색 기능이 적용된 쿼리를 추가 ( T =TITLE , W:WRITE , C =CONTENT , R:REGDATE) 
+	
+	
+	private final String BOARD_LIST_T ="select *from board where title like '%' \\?\\ '%' order by seq desc " ;
+	private final String BOARD_LIST_W ="select *from board where write like '%' \\?\\ '%' order by seq desc  " ;
+	private final String BOARD_LIST_C =" select *from board where content like '%' \\?\\ '%' order by seq desc " ;
+	private final String BOARD_LIST_R="select *from board where regdate like'%' \\?\\ '%' order by seq desc  " ;
+	
+	
+	
+	
+	
+	
 	
 	//insertBoard(BoardDTO dto) 메소드  : 
 	public void insertBoard (BoardDTO dto) 
@@ -45,6 +58,7 @@ public class BoardDAO {
 			
 			//conn, pstmt 객체 활성화 
 			conn = JDBCUtil.getConnection() ; 
+		
 			pstmt= conn.prepareStatement(BOARD_INSERT); 
 			
 			//pstmt 객체의 ? 변수의 값 할당. 
@@ -82,9 +96,20 @@ public class BoardDAO {
 		
 		List<BoardDTO> boardList = new ArrayList<>(); 
 		
+     	/*
+             BOARD_LIST_T ="select *from board where title like '%' \\?\\ '%' order by seq desc " ;
+	     	 BOARD_LIST_W ="select *from board where write like '%' \\?\\ '%' order by seq desc  " ;
+	     	 BOARD_LIST_C =" select *from board where content like '%' \\?\\'%' order by seq desc " ;
+		      BOARD_LIST_R="select *from board where regdate like'%' \\?\\'%' order by seq desc  " ;
+		*/
+		
+		
+		
+		
 		try 
 		{
 			conn = JDBCUtil.getConnection(); 	//conn 객체 활성화 : Oracle , XE , HR12 , 1234 
+		
 			//BOARD_LIST = "select * from board order by seq desc" 
 			pstmt = conn.prepareStatement(BOARD_LIST) ; 
 			

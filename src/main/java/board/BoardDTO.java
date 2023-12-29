@@ -23,4 +23,11 @@ public class BoardDTO {
 	private Date regdate; 
 	private int cnt ; 
 
+	// 검색 기능의 필드 추가  : 
+	// serchCondition  : TITLE ,WRITE, CONTENT , REGDATE 중 하나의 값이 저장 . 
+	
+	
+	private String searchCondition;
+	private String searchKeword;
+	
 }

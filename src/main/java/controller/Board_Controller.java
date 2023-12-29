@@ -18,6 +18,7 @@ import board.BoardDTO;
 @WebServlet ("*.do")
 public class Board_Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String searchkeword;
        
     public Board_Controller() {
         super();
@@ -48,7 +49,8 @@ public class Board_Controller extends HttpServlet {
 		{
 			System.out.println("/insertBoard.do 요청");
 			//로직 처리 
-			
+
+	
 			//1. 클라이언트의 넘어오는 변수가 잘 들어 오는지 확인  (클라이언트 요청) 
 			String title = request.getParameter("title"); 
 			String write = request.getParameter("write"); 
@@ -87,8 +89,28 @@ public class Board_Controller extends HttpServlet {
 			System.out.println("/getBoardList.do 요청");
 			//로직 처리 
 			
+			String searchCondition = request.getParameter("serchCondition") ;
+			String serarchKeword=request.getParameter("searchKeword");
+			
+			System.out.println("검색 조건 : "+searchCondition);
+			System.out.println("검색어 : "+searchkeword); 
+			
+			if (searchCondition == null ) {
+				searchCondition = "TITLE" ;
+				
+			}
+			if (searchkeword== null) {
+				searchkeword ="" ;
+			}
+			
+			
 			//1. BoardDTO 객체 생성 
 			BoardDTO dto = new BoardDTO(); 
+			
+			//검색어를 dto 에 setter 주입후
+			dto.setSearchCondition(searchCondition);
+			dto.setSearchKeword(serarchKeword);
+			
 			
 			//2. BoardDAO 객체의 getBoardList(dto) 
 			BoardDAO dao = new BoardDAO (); 
@@ -116,6 +138,7 @@ public class Board_Controller extends HttpServlet {
 		{
 			System.out.println("/getBoard.do 요청");
 			//로직 처리 
+		
 			
 			//1. clinet 넘어오는 파라미터 seq 변수의 값을 읽어서 dto에 저장후 dao.getBoard(dto) 
 			//http://localhost:8181/JSP_MVC_M2/getBoard.do?seq=5 
